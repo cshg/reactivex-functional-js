@@ -1,4 +1,3 @@
-require('./concatAll');
 require('./concatMap');
 
 var movieLists = require('./movieLists');
