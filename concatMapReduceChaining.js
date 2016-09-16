@@ -9,7 +9,7 @@ var movieLists = require('./movieLists');
 function returnMinSizeBoxart(prevBoxart, currBoxart) {
   var prevBoxartSize = prevBoxart.width * prevBoxart.height;
   var currBoxartSize = currBoxart.width * currBoxart.height;
-  if (currBoxart < prevBoxart) {
+  if (currBoxartSize < prevBoxartSize) {
     return currBoxart;
   }
   return prevBoxart;
