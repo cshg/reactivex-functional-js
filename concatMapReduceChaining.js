@@ -1,35 +1,47 @@
 require('./concatMap');
 
-Object.prototype.wrapInArray = function() {
+Object.prototype.wrapInArray = () => {
   return [this];
 };
 
-var movieLists = require('./movieLists');
+const movieLists = require('./movieLists');
 
-function returnMinSizeBoxart(prevBoxart, currBoxart) {
-  var prevBoxartSize = prevBoxart.width * prevBoxart.height;
-  var currBoxartSize = currBoxart.width * currBoxart.height;
+const findMinSizeBoxart = (prevBoxart, currBoxart) => {
+  const prevBoxartSize = prevBoxart.width * prevBoxart.height;
+  const currBoxartSize = currBoxart.width * currBoxart.height;
   if (currBoxartSize < prevBoxartSize) {
     return currBoxart;
   }
   return prevBoxart;
-}
+};
 
-function concatMapReduceChaining() {
+function concatMapReduceChainingES6() {
   return movieLists
-    .concatMap(function(movieList) { return movieList.videos
-        .concatMap(function(video) { return video.boxarts
-          .reduce(returnMinSizeBoxart)
+    .concatMap(movieList => movieList.videos
+        .concatMap(video => video.boxarts
+          .reduce(findMinSizeBoxart)
           .wrapInArray()
-          .map(function(boxart) {
-            return {
-              id: video.id,
-              title: video.title,
-              boxart: boxart.url,
-            };
-          });
-        });
-    });
+          .map(boxart => ({ id: video.id, title: video.title, boxart: boxart.url }))
+        )
+    );
 }
 
-console.log(concatMapReduceChaining());
+console.log(concatMapReduceChainingES6());
+
+// ES5 version
+// function concatMapReduceChainingES5() {
+//   return movieLists
+//     .concatMap(function(movieList) { return movieList.videos
+//         .concatMap(function(video) { return video.boxarts
+//           .reduce(findMinSizeBoxart)
+//           .wrapInArray()
+//           .map(function(boxart) {
+//             return {
+//               id: video.id,
+//               title: video.title,
+//               boxart: boxart.url,
+//             };
+//           });
+//         });
+//     });
+// }
